@@ -11,7 +11,7 @@ maps
 		resources
 		{
 		}
-		defaultfloortexture = "OBNKRC20";
+		defaultfloortexture = "OBKMTD17";
 		defaultceiltexture = "F_SKY1";
 		defaulttoptexture = "OBRCKB31";
 		defaultwalltexture = "OBRCKB31";
@@ -28,9 +28,9 @@ maps
 		overrideceilheight = false;
 		overridebrightness = false;
 		uselongtexturenames = false;
-		viewpositionx = 185.4656f;
-		viewpositiony = 420.5764f;
-		viewscale = 1.04041f;
+		viewpositionx = 2468.656f;
+		viewpositiony = 859.2476f;
+		viewscale = 0.2802128f;
 		scriptcompiler = "zdoom_acs.cfg";
 		
 		grid
@@ -41,7 +41,7 @@ maps
 			backoffsety = 0;
 			backscalex = 100;
 			backscaley = 100;
-			gridsize = 16;
+			gridsize = 8;
 			gridrotate = 0;
 			gridoriginx = 0;
 			gridoriginy = 0;
