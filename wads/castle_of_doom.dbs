@@ -1,5 +1,5 @@
 type = "Doom Builder Map Settings Configuration";
-gameconfig = "GZDoom_DoomUDMF.cfg";
+gameconfig = "Boom_Doom2Doom.cfg";
 strictpatches = 0;
 
 maps
@@ -10,12 +10,32 @@ maps
 		
 		resources
 		{
+			
+			resource0
+			{
+				type = 0;
+				location = "C:\\games\\doom\\original wads\\doom2.wad";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+				requiredarchives = "";
+			}
+			
+			resource1
+			{
+				type = 0;
+				location = "C:\\games\\doom\\texture packs\\PUSS26_CCC2vP1.wad";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+				requiredarchives = "";
+			}
 		}
-		defaultfloortexture = "OBKMTD17";
+		defaultfloortexture = "ADELB14F";
 		defaultceiltexture = "F_SKY1";
-		defaulttoptexture = "ASHWALL4";
-		defaultwalltexture = "ASHWALL4";
-		defaultbottomtexture = "ASHWALL4";
+		defaulttoptexture = "STARTAN2";
+		defaultwalltexture = "STARTAN2";
+		defaultbottomtexture = "STARTAN2";
 		custombrightness = 196;
 		customfloorheight = 0;
 		customceilheight = 128;
@@ -28,10 +48,9 @@ maps
 		overrideceilheight = false;
 		overridebrightness = false;
 		uselongtexturenames = false;
-		viewpositionx = 1021.468f;
-		viewpositiony = 400.808f;
-		viewscale = 3.862963f;
-		scriptcompiler = "zdoom_acs.cfg";
+		viewpositionx = -2147.645f;
+		viewpositiony = 430.135f;
+		viewscale = 3.762451f;
 		
 		grid
 		{
@@ -73,30 +92,6 @@ maps
 			autocloseonsuccess = true;
 			exitcodeiserror = true;
 			stderriserror = true;
-		}
-		
-		scriptdocuments
-		{
-			
-			document0
-			{
-				filename = "DIALOGUE";
-				hash = 3588187714;
-				resource;
-				tabtype = 0;
-				scripttype = 18;
-			}
-			
-			document1
-			{
-				filename = "SCRIPTS";
-				hash = 3469170009;
-				resource;
-				tabtype = 0;
-				scripttype = 1;
-				caretposition = 43;
-				activetab = true;
-			}
 		}
 	}
 }
