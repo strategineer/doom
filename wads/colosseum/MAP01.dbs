@@ -14,18 +14,18 @@ maps
 			resource0
 			{
 				type = 0;
-				location = "C:\\games\\doom\\texture packs\\OTEX_1.1.WAD";
+				location = "C:\\games\\doom\\texture packs\\HAMTEX.wad";
 				option1 = 0;
 				option2 = 0;
 				notfortesting = 0;
 				requiredarchives = "";
 			}
 		}
-		defaultfloortexture = "OHEXAE04";
-		defaultceiltexture = "F_SKY1";
-		defaulttoptexture = "BRICK7";
-		defaultwalltexture = "BRICK7";
-		defaultbottomtexture = "BRICK7";
+		defaultfloortexture = "DEVAGRID";
+		defaultceiltexture = "DEVAGRID";
+		defaulttoptexture = "DEVA3";
+		defaultwalltexture = "DEVA3";
+		defaultbottomtexture = "DEVA3";
 		custombrightness = 196;
 		customfloorheight = 0;
 		customceilheight = 128;
@@ -38,9 +38,9 @@ maps
 		overrideceilheight = false;
 		overridebrightness = false;
 		uselongtexturenames = false;
-		viewpositionx = 4474.392f;
-		viewpositiony = 3283.342f;
-		viewscale = 0.1346642f;
+		viewpositionx = 383.6188f;
+		viewpositiony = -4.608918f;
+		viewscale = 1.893234f;
 		
 		grid
 		{
@@ -50,10 +50,10 @@ maps
 			backoffsety = 0;
 			backscalex = 100;
 			backscaley = 100;
-			gridsize = 512;
-			gridrotate = 0;
-			gridoriginx = 0;
-			gridoriginy = 0;
+			gridsize = 4;
+			gridrotate = 5.88366981318021;
+			gridoriginx = -45;
+			gridoriginy = 45;
 		}
 		
 		reloadresourceprecommand
