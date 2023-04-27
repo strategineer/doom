@@ -20,12 +20,22 @@ maps
 				notfortesting = 0;
 				requiredarchives = "";
 			}
+			
+			resource1
+			{
+				type = 0;
+				location = "C:\\games\\doom\\texture packs\\32in24-15_tex_v2.wad";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+				requiredarchives = "";
+			}
 		}
-		defaultfloortexture = "DEVAGRID";
-		defaultceiltexture = "DEVAGRID";
-		defaulttoptexture = "DEVA3";
-		defaultwalltexture = "DEVA3";
-		defaultbottomtexture = "DEVA3";
+		defaultfloortexture = "EGYPFT01";
+		defaultceiltexture = "EGYPFT01";
+		defaulttoptexture = "EGYPTRM4";
+		defaultwalltexture = "EGYPTRM4";
+		defaultbottomtexture = "EGYPTRM4";
 		custombrightness = 196;
 		customfloorheight = 0;
 		customceilheight = 128;
@@ -38,9 +48,9 @@ maps
 		overrideceilheight = false;
 		overridebrightness = false;
 		uselongtexturenames = false;
-		viewpositionx = 383.6188f;
-		viewpositiony = -4.608918f;
-		viewscale = 1.893234f;
+		viewpositionx = -928.7753f;
+		viewpositiony = 647.7009f;
+		viewscale = 0.6156274f;
 		
 		grid
 		{
@@ -50,10 +60,10 @@ maps
 			backoffsety = 0;
 			backscalex = 100;
 			backscaley = 100;
-			gridsize = 4;
-			gridrotate = 5.88366981318021;
-			gridoriginx = -45;
-			gridoriginy = 45;
+			gridsize = 16;
+			gridrotate = 0;
+			gridoriginx = 64;
+			gridoriginy = 624;
 		}
 		
 		reloadresourceprecommand
