@@ -1,0 +1,11 @@
+create outwad
+
+datemarker outwad __VER__
+
+# Merge in maps.
+mergewad outwad MAP01.wad
+mergewad outwad MAP01_tex.wad
+
+# Export to file.
+finish outwad tomb_of_doom.wad
+end
