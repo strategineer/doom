@@ -14,16 +14,6 @@ maps
 			resource0
 			{
 				type = 0;
-				location = "C:\\games\\doom\\texture packs\\HAMTEX.wad";
-				option1 = 0;
-				option2 = 0;
-				notfortesting = 0;
-				requiredarchives = "";
-			}
-			
-			resource1
-			{
-				type = 0;
 				location = "C:\\games\\doom\\texture packs\\32in24-15_tex_v2.wad";
 				option1 = 0;
 				option2 = 0;
@@ -48,9 +38,9 @@ maps
 		overrideceilheight = false;
 		overridebrightness = false;
 		uselongtexturenames = false;
-		viewpositionx = 801.4271f;
-		viewpositiony = 467.1374f;
-		viewscale = 0.9035956f;
+		viewpositionx = -180.0962f;
+		viewpositiony = -15.94215f;
+		viewscale = 0.1440027f;
 		
 		grid
 		{
