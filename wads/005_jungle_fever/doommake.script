@@ -377,6 +377,144 @@ check function doMapTextures() {
 
 /* ------------------------------------------------------------------------ */
 
+#define PROP_RUN_EXE            "doommake.run.exe"
+#define PROP_RUN_EXE_WORK       "doommake.run.exe.workdir"
+#define PROP_RUN_SWITCH_IWAD    "doommake.run.switch.iwad"
+#define DEFAULT_RUN_SWITCH_IWAD "-iwad"
+#define PROP_RUN_SWITCH_FILE    "doommake.run.switch.file"
+#define DEFAULT_RUN_SWITCH_FILE "-file"
+#define PROP_RUN_SWITCH_DEH     "doommake.run.switch.deh"
+#define DEFAULT_RUN_SWITCH_DEH  "-deh"
+#define PROP_RUN_SWITCH_HUD     "doommake.run.switch.hud"
+#define DEFAULT_RUN_SWITCH_HUD  ""
+#define PROP_RUN_SWITCH_COMPLEVEL "doommake.run.switch.complevel"
+#define DEFAULT_RUN_SWITCH_COMPLEVEL ""
+#define PROP_RUN_SWITCH_EXTRA1 "doommake.run.switch.extra1"
+#define DEFAULT_RUN_SWITCH_EXTRA1 ""
+#define PROP_RUN_SWITCH_EXTRA2 "doommake.run.switch.extra2"
+#define DEFAULT_RUN_SWITCH_EXTRA2 ""
+
+/**
+ * Calls a port to run this project.
+ * portType: If specified, then this looks for the properties that end with ".porttype".
+ * wadList: List of WAD files to add.
+ * dehFile: DEH file to add.
+ */
+check function doRun(portType, wadList, dehFile, args) {
+
+	iwadPath = getIwad();
+	if (empty(iwadPath))
+		return error("NoIWAD", "An IWAD for this project was not set in properties: " + PROP_IWADPATH);
+
+	portType = empty(portType) ? "" : "." + portType;
+
+	exepath =    prop(PROP_RUN_EXE + portType);
+	exeworkdir = prop(PROP_RUN_EXE_WORK + portType) ?: fileparent(exepath);
+	iwadSwitch = prop(PROP_RUN_SWITCH_IWAD + portType, DEFAULT_RUN_SWITCH_IWAD);
+	fileSwitch = prop(PROP_RUN_SWITCH_FILE + portType, DEFAULT_RUN_SWITCH_FILE);
+	dehSwitch =  prop(PROP_RUN_SWITCH_DEH + portType, DEFAULT_RUN_SWITCH_DEH);
+	hudSwitch =  prop(PROP_RUN_SWITCH_HUD + portType, DEFAULT_RUN_SWITCH_HUD);
+	compLevelSwitch =  prop(PROP_RUN_SWITCH_COMPLEVEL + portType, DEFAULT_RUN_SWITCH_COMPLEVEL);
+	extraSwitch1 =  prop(PROP_RUN_SWITCH_EXTRA1 + portType, DEFAULT_RUN_SWITCH_EXTRA1);
+	extraSwitch2 =  prop(PROP_RUN_SWITCH_EXTRA2 + portType, DEFAULT_RUN_SWITCH_EXTRA2);
+	
+	if (empty(exepath))
+		return error("NoEXE", "Executable not specified. Requires a property to be set: " + PROP_RUN_EXE + portType);
+	
+	if (!fileexists(exepath))
+		return error("NoEXE", "Executable could not be found: " + exepath);
+	if (!fileexists(exeworkdir))
+		return error("NoEXE", "Working directory for executable not found: " + exeworkdir);
+
+	if (empty(iwadSwitch))
+		return error("RunError", "IWAD switch not specified. Requires a property to be set: " + PROP_RUN_SWITCH_IWAD + portType);
+	if (empty(fileSwitch))
+		return error("RunError", "FILE switch not specified. Requires a property to be set: " + PROP_RUN_SWITCH_FILE + portType);
+	if (empty(dehSwitch))
+		return error("RunError", "DEH switch not specified. Requires a property to be set: " + PROP_RUN_SWITCH_DEH + portType);
+
+	arguments = [];
+
+	arguments->listadd(iwadSwitch);
+	arguments->listadd(iwadPath->filecanonpath());
+
+	if (!empty(wadList)) {
+		arguments->listadd(fileSwitch);
+		each (w : wadList)
+			arguments->listadd(w->filecanonpath());
+	}
+
+	if (!empty(dehFile)) {
+		arguments->listadd(dehSwitch);
+		arguments->listadd(dehFile->filecanonpath());
+	}
+	
+	if (args) each (a : args) {
+		arguments->listadd(a);
+	}
+	
+
+	if (!empty(hudSwitch)) {
+		arguments->listadd("-hud");
+		arguments->listadd(hudSwitch);
+	}
+
+	if (!empty(compLevelSwitch)) {
+		arguments->listadd("-complevel");
+		arguments->listadd(compLevelSwitch);
+	}
+	if (!empty(extraSwitch1)) {
+		arguments->listadd(extraSwitch1);
+	}
+	if (!empty(extraSwitch2)) {
+		arguments->listadd(extraSwitch2);
+	}
+	return execresult(exec(
+		exepath, arguments, envvars(), exeworkdir, stdout(), stderr(), stdin()
+	));
+}
+
+/* ------------------------------------------------------------------------ */
+
+check function runCommon(args)
+{
+	// Must use native separator for args passed to program.
+	fs = prop("file.separator", "/");
+	
+	patchPath     = getBuildDirectory() + fs + getPatchFile();
+	assetsWadPath = getBuildDirectory() + fs + getAssetsWAD();
+	mapsWadPath   = getBuildDirectory() + fs + getMapsWAD();
+	texWadPath    = getBuildDirectory() + fs + getTextureWAD();
+	mapTexWadPath = getBuildDirectory() + fs + getMapTextureWAD();
+
+	wadList = [];
+
+	if (fileexists(assetsWadPath))
+		wadlist->listAdd(assetsWadPath);
+	if (fileexists(mapsWadPath))
+		wadlist->listAdd(mapsWadPath);
+
+	// Run will add either add the reduced texture set from compiled maps 
+	// or the compiled textures WAD. If you want to explicitly use one or the
+	// other, edit the following lines:
+
+	if (fileexists(mapTexWadPath))
+		wadlist->listAdd(mapTexWadPath);
+	else if (fileexists(texWadPath))
+		wadlist->listAdd(texWadPath);
+	
+	// Set DEH file here, if any.
+	dehFile = fileexists(patchPath) ? file(patchPath) : null;
+
+	if (length(args) > 1) {
+		argrest = args->sublist(1);
+	}
+
+	return doRun(args[0], wadList, dehFile, argrest);
+}
+
+/* ------------------------------------------------------------------------ */
+
 #define MERGESCRIPT_RELEASE "scripts/merge-release.txt"
 #define SRC_WADINFO "/wadinfo.txt"
 
@@ -547,6 +685,29 @@ check entry maps(args) {
  ****************************************************************************/
 check entry maptextures(args) {
 	doMapTextures();
+}
+
+/*****************************************************************************
+ * TARGET: run
+ *****************************************************************************
+ * Runs this project.
+ * doommake run [optional:portname]
+ ****************************************************************************/
+check entry run(args) {
+	doInit(args);
+	doAll();
+	return runCommon(args);	
+}
+
+/*****************************************************************************
+ * TARGET: justrun
+ *****************************************************************************
+ * Runs this project with no pre-build.
+ * doommake justrun [optional:portname]
+ ****************************************************************************/
+check entry justrun(args) {
+	doInit(args);
+	return runCommon(args);	
 }
 
 /****************************************************************************

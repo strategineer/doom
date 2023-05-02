@@ -4,5 +4,7 @@
 *.backup3
 *.bak
 texpack
-wads/textures
+wads/*/src/wads/textures
 *.dbs
+dist/
+build/
