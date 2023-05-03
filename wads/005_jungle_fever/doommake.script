@@ -393,6 +393,10 @@ check function doMapTextures() {
 #define DEFAULT_RUN_SWITCH_EXTRA1 ""
 #define PROP_RUN_SWITCH_EXTRA2 "doommake.run.switch.extra2"
 #define DEFAULT_RUN_SWITCH_EXTRA2 ""
+#define PROP_RUN_SWITCH_EXTRA3 "doommake.run.switch.extra3"
+#define DEFAULT_RUN_SWITCH_EXTRA3 ""
+#define PROP_RUN_SWITCH_EXTRA4 "doommake.run.switch.extra4"
+#define DEFAULT_RUN_SWITCH_EXTRA4 ""
 
 /**
  * Calls a port to run this project.
@@ -417,6 +421,8 @@ check function doRun(portType, wadList, dehFile, args) {
 	compLevelSwitch =  prop(PROP_RUN_SWITCH_COMPLEVEL + portType, DEFAULT_RUN_SWITCH_COMPLEVEL);
 	extraSwitch1 =  prop(PROP_RUN_SWITCH_EXTRA1 + portType, DEFAULT_RUN_SWITCH_EXTRA1);
 	extraSwitch2 =  prop(PROP_RUN_SWITCH_EXTRA2 + portType, DEFAULT_RUN_SWITCH_EXTRA2);
+	extraSwitch3 =  prop(PROP_RUN_SWITCH_EXTRA3 + portType, DEFAULT_RUN_SWITCH_EXTRA3);
+	extraSwitch4 =  prop(PROP_RUN_SWITCH_EXTRA4 + portType, DEFAULT_RUN_SWITCH_EXTRA4);
 	
 	if (empty(exepath))
 		return error("NoEXE", "Executable not specified. Requires a property to be set: " + PROP_RUN_EXE + portType);
@@ -468,6 +474,12 @@ check function doRun(portType, wadList, dehFile, args) {
 	}
 	if (!empty(extraSwitch2)) {
 		arguments->listadd(extraSwitch2);
+	}
+	if (!empty(extraSwitch3)) {
+		arguments->listadd(extraSwitch3);
+	}
+	if (!empty(extraSwitch4)) {
+		arguments->listadd(extraSwitch4);
 	}
 	return execresult(exec(
 		exepath, arguments, envvars(), exeworkdir, stdout(), stderr(), stdin()
