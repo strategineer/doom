@@ -1,0 +1,5 @@
+MAP MAP01
+{
+   levelname = "Red Scare"
+   skytexture =  "sky2"
+}
