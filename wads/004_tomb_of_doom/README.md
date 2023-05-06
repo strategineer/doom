@@ -7,3 +7,7 @@ Mapping time: ?
 ![](img/layout.png)
 
 ![](img/MAP01.png)
+![](img/MAP01_1.png)
+![](img/MAP01_2.png)
+![](img/MAP01_3.png)
+![](img/MAP01_4.png)
