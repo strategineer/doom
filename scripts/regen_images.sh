@@ -9,3 +9,5 @@ cd ../../../wads/004_tomb_of_doom/img
 ../../../scripts/drawmaps2.py ../MAP01.wad MAP01
 cd ../../../wads/005_jungle_fever/img
 ../../../scripts/drawmaps2.py ../src/maps/MAP01.wad MAP01
+cd ../../../wads/006_speed003/img
+../../../scripts/drawmaps2.py ../src/maps/MAP01.wad MAP01
