@@ -1,6 +1,6 @@
 MAP MAP01
 {
-   levelname = "Red Scare"
+   levelname = "Ouroboros"
    skytexture =  "sky2"
    author = "strategineer"
 }
