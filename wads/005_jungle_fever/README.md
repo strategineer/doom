@@ -3,7 +3,7 @@ A river of blood is being processed by soul sucking corporate demons in a UAC fa
 Mapping time: ?
 
 ## Screenshots
-![](img/layout.png)
+![](img/layout.jpg)
 
 ![](img/MAP01.png)
 

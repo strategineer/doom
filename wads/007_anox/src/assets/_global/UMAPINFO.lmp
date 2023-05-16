@@ -1,0 +1,6 @@
+MAP MAP01
+{
+   levelname = "Anox"
+   author = "strategineer"
+   skytexture =  "sky1"
+}

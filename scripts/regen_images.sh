@@ -11,3 +11,5 @@ cd ../../../wads/005_jungle_fever/img
 ../../../scripts/drawmaps2.py ../src/maps/MAP01.wad MAP01
 cd ../../../wads/006_ouroboros/img
 ../../../scripts/drawmaps2.py ../src/maps/MAP01.wad MAP01
+cd ../../../wads/007_anox/img
+../../../scripts/drawmaps2.py ../src/maps/MAP01.wad MAP01
