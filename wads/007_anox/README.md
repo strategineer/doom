@@ -1,7 +1,6 @@
 
 
-Mapping time: 2h
-Detailing: 3h+
+time: 15-20h
 
 ## Screenshots
 ![](img/layout.jpg)
