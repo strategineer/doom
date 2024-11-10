@@ -8,3 +8,4 @@ wads/*/src/wads/textures
 *.dbs
 dist/
 build/
+exports/

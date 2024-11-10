@@ -391,9 +391,7 @@ else:
     # don't use anti-aliasing without spawn spots
     if not dmspawns and not ctfspawns:
         alias = 1
-    font = ImageFont.truetype(
-        "/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf", txtdim * alias
-    )
+    font = ImageFont.load_default()
 
     # process optional limits
     try:
