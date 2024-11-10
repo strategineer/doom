@@ -53,27 +53,27 @@ else:
                 from_music_name_to_map_name[music_track] = previous_map_name
 
     wad_name = Path(sourcewad_filepath).stem
-    export_path = Path(f"exports/{wad_name}")
-    export_path.mkdir(exist_ok=True)
+    extraction_path = Path(f"exports/{wad_name}")
+    extraction_path.mkdir(exist_ok=True)
     if verbose:
-        print(f"Extracting midis from {wad_name} to {export_path}...")
+        print(f"Extracting midis from {wad_name} to {extraction_path}...")
     for m in inwad.music:
         if not all_midis and m not in from_music_name_to_map_name:
             # skip weird tracks unless -a arg is passed
             continue
         filename = ''.join(x for x in from_music_name_to_map_name[m] if x.isalnum()) if m in from_music_name_to_map_name else f"_{m}"
-        midi_filepath = Path(export_path, f"{filename}.mid")
+        midi_filepath = Path(extraction_path, f"{wad_name}_{filename}.mid")
         if not midi_filepath.exists() or force:
             inwad.music[m].to_file(str(midi_filepath))
 
     if len(args) == 1:
         sys.exit()
     exported_extension = f".{args[1]}"
-    exported_directory = f.parents[1].joinpath(f"{wad_name}{exported_extension}")
+    exported_directory = extraction_path.parents[0].joinpath(f"{wad_name}{exported_extension}")
     exported_directory.mkdir(exist_ok=True)
     if verbose:
         print(f"Rendering midis to {exported_directory}...")
-    for f in export_path.iterdir():
+    for f in extraction_path.iterdir():
         exported_filename = f.name.replace(".mid", exported_extension)
         exported_filepath = exported_directory.joinpath(exported_filename)
         if not exported_filepath.exists() or force:
