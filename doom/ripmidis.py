@@ -41,7 +41,7 @@ else:
             if music_track not in from_music_name_to_map_name:
                 from_music_name_to_map_name[music_track] = previous_map_name
 
-    wad_name = Path(sourcewad_filepath).name
+    wad_name = Path(sourcewad_filepath).stem
     export_path = Path(f"exports/{wad_name}")
     export_path.mkdir(exist_ok=True)
     for m in inwad.music:
