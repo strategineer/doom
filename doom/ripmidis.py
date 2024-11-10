@@ -53,7 +53,7 @@ else:
                 from_music_name_to_map_name[music_track] = previous_map_name
 
     wad_name = Path(sourcewad_filepath).stem
-    extraction_path = Path(f"exports/{wad_name}")
+    extraction_path = Path(f"exports/")
     extraction_path.mkdir(exist_ok=True)
     if verbose:
         print(f"Extracting midis from {wad_name} to {extraction_path}...")
@@ -69,12 +69,10 @@ else:
     if len(args) == 1:
         sys.exit()
     exported_extension = f".{args[1]}"
-    exported_directory = extraction_path.parents[0].joinpath(f"{wad_name}{exported_extension}")
-    exported_directory.mkdir(exist_ok=True)
     if verbose:
-        print(f"Rendering midis to {exported_directory}...")
-    for f in extraction_path.iterdir():
+        print(f"Rendering midis to {extraction_path}...")
+    for f in extraction_path.glob("*.mid"):
         exported_filename = f.name.replace(".mid", exported_extension)
-        exported_filepath = exported_directory.joinpath(exported_filename)
+        exported_filepath = extraction_path.joinpath(exported_filename)
         if not exported_filepath.exists() or force:
             subprocess.run(["fluidsynth", f"-T{args[1]}", "-F", exported_filepath, f])
