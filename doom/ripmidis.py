@@ -136,16 +136,21 @@ else:
             if not all_midis and m not in from_music_name_to_map_name:
                 # skip weird tracks unless -a arg is passed
                 continue
-            if not inwad.music[m].data.startswith(b'MThd'):
+            data = inwad.music[m].data
+            print(f"{m}P {inwad.music[m].data[:10]}")
+            file_extension = ".mid" 
+            if data.startswith(b'Ogg'):
+                file_extension = ".ogg"
+            elif not data.startswith(b'MThd'):
                 # note to self: DOOM-specific MUS files start with b'MUS'
                 # TODO figure out if we could convert MUS files to MIDI files, that would be sick, to allow for playing them outside of a doom source port
                 if verbose:
                     print(f"Skipping {m} track for {wad_name} because we can only handle MIDI files for now")
                 continue
             filename = ''.join(x for x in from_music_name_to_map_name[m] if x.isalnum() or x == '_') if m in from_music_name_to_map_name else f"_{m}"
-            midi_filepath = Path(extraction_path, f"{filename_prefix}{filename}.mid")
-            if not midi_filepath.exists() or force:
-                inwad.music[m].to_file(str(midi_filepath))
+            filepath = Path(extraction_path, f"{filename_prefix}{filename}{file_extension}")
+            if not filepath.exists() or force:
+                inwad.music[m].to_file(str(filepath))
                 n += 1
 
         print(f"Exported {n} music tracks")
