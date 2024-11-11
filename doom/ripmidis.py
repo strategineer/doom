@@ -6,6 +6,44 @@ import subprocess
 
 from omg import *
 
+DEFAULT_DOOM2_TRACKNAMES_TO_MAP_MAPPINGS = {
+                "D_DM2TTL": "_TITLE",
+                "D_DM2TTL": "_INTERMISSION",
+                "D_READ_M": "_TEXT",
+                "D_RUNNIN": "MAP01",
+                "D_RUNNI2": "MAP15",
+                "D_STALKS": "MAP02",
+                "D_STLKS2": "MAP11",
+                "D_STLKS3": "MAP17",
+                "D_COUNTD": "MAP03",
+                "D_COUNT2": "MAP21",
+                "D_BETWEE": "MAP04",
+                "D_DOOM": "MAP05",
+                "D_DOOM2": "MAP13",
+                "D_THE_DA": "MAP06",
+                "D_THEDA2": "MAP12",
+                "D_THEDA3": "MAP24",
+                "D_SHAWN": "MAP07",
+                "D_SHAWN2": "MAP19",
+                "D_SHAWN3": "MAP29",
+                "D_DDTBLU": "MAP08",
+                "D_DDTBL2": "MAP14",
+                "D_DDTBL3": "MAP22",
+                "D_IN_CIT": "MAP09",
+                "D_DEAD": "MAP10",
+                "D_DEAD2": "MAP16",
+                "D_ROMERO": "MAP18",
+                "D_ROMER2": "MAP27",
+                "D_MESSAG": "MAP20",
+                "D_MESSG2": "MAP26",
+                "D_AMPIE": "MAP23",
+                "D_ADRIAN": "MAP25",
+                "D_TENSE": "MAP28",
+                "D_OPENIN": "MAP30",
+                "D_EVIL": "MAP31",
+                "D_ULTIMA": "MAP32"
+            }
+
 verbose = False
 all_midis = False
 force = False
@@ -35,58 +73,90 @@ else:
         sys.exit(2)
 
     # load WAD and draw map(s)
-    sourcewad_filepath = args[0]
+    try:
+        wads = [str(x) for x in Path(args[0]).glob("**/*.wad")]
+    except:
+        wads = [args[0]]
+
     if verbose:
+        print(wads)
+    for sourcewad_filepath in wads:
+        wad_name = Path(sourcewad_filepath).stem
+        filename_prefix = f"{wad_name}_"
         print("Loading %s..." % sourcewad_filepath)
-    inwad = WAD()
-    inwad.from_file(sourcewad_filepath)
-
-    from_music_name_to_map_name = {}
-    mapinfo = inwad.data["MAPINFO"].data.decode('ascii')
-    previous_map_name = None
-    for l in mapinfo.split("\n"):
-        if verbose:
-            print(l)
-        if l.strip(r" {").startswith("map "):
-            previous_map_name = l[4:].strip()
-            print(previous_map_name)
-        if l.strip().startswith("music ") or l.strip().startswith("music ="):
-            music_track = l.split("=")[1].strip() if "=" in l else l.split(" ")[1].strip()
-            print(music_track)
-            if music_track not in from_music_name_to_map_name:
-                from_music_name_to_map_name[music_track.strip("\"")] = previous_map_name
-    
-    if verbose:
-        print(from_music_name_to_map_name)
-
-    wad_name = Path(sourcewad_filepath).stem
-    filename_prefix = f"{wad_name}_"
-    extraction_path = Path(f"exports/")
-    extraction_path.mkdir(exist_ok=True)
-    n = 0
-    if verbose:
-        print(f"Extracting midis from {wad_name} to {extraction_path}...")
-    for m in inwad.music:
-        # todo these files aren't always midis, I should detect that somehow
-        if not all_midis and m not in from_music_name_to_map_name:
-            # skip weird tracks unless -a arg is passed
+        inwad = WAD()
+        try:
+            inwad.from_file(sourcewad_filepath)
+        except TypeError as e:
+            print(f"Failed to load {sourcewad_filepath}, skipping")
             continue
-        filename = ''.join(x for x in from_music_name_to_map_name[m] if x.isalnum()) if m in from_music_name_to_map_name else f"_{m}"
-        midi_filepath = Path(extraction_path, f"{filename_prefix}{filename}.mid")
-        if not midi_filepath.exists() or force:
-            inwad.music[m].to_file(str(midi_filepath))
-            n += 1
+        from_music_name_to_map_name = {
+            # these might not be set in the MAPINFO so let's set the here
+            "D_DM2TTL": "__TITLE",
+            "D_DM2INT": "_INTERMISSION",
+            "D_READ_M": "_TEXT",
+        }
+        n_initial_count = len(from_music_name_to_map_name)
+        try:
+            mapinfo = inwad.data["MAPINFO"].data.decode('ascii')
+            previous_map_name = None
+            for l in mapinfo.split("\n"):
+                if verbose:
+                    print(l)
+                if l.strip(r" {").startswith("map "):
+                    previous_map_name = l[4:].strip()
+                    if verbose:
+                        print(previous_map_name)
+                if previous_map_name is not None and (l.strip().startswith("music ") or l.strip().startswith("music =")):
+                    music_track = l.split("=")[1].strip() if "=" in l else l.split(" ")[1].strip()
+                    if verbose:
+                        print(music_track)
+                    if music_track not in from_music_name_to_map_name:
+                        from_music_name_to_map_name[music_track.strip("\"")] = previous_map_name
+            if len(from_music_name_to_map_name) == n_initial_count:
+                raise ValueError
+        except KeyError:
+            print(f"Failed to find MAPINFO lump in {sourcewad_filepath}, defaulting to Doom II music track to map mappings")
+            # todo check if this is actually how it works, I'm pretty sure it is but let's confirm
+            from_music_name_to_map_name = DEFAULT_DOOM2_TRACKNAMES_TO_MAP_MAPPINGS
+        except ValueError:
+            print(f"No music tracks defined in MAPINFO lump in {sourcewad_filepath}, defaulting to Doom II music track to map mappings")
+            # todo check if this is actually how it works, I'm pretty sure it is but let's confirm
+            from_music_name_to_map_name = DEFAULT_DOOM2_TRACKNAMES_TO_MAP_MAPPINGS
+        
+        if verbose:
+            print(from_music_name_to_map_name)
 
-    if verbose:
+        extraction_path = Path(f"exports/")
+        extraction_path.mkdir(exist_ok=True)
+        n = 0
+        if verbose:
+            print(f"Extracting midis from {wad_name} to {extraction_path}...")
+        for m in inwad.music:
+            if not all_midis and m not in from_music_name_to_map_name:
+                # skip weird tracks unless -a arg is passed
+                continue
+            if not inwad.music[m].data.startswith(b'MThd'):
+                # note to self: DOOM-specific MUS files start with b'MUS'
+                # TODO figure out if we could convert MUS files to MIDI files, that would be sick, to allow for playing them outside of a doom source port
+                if verbose:
+                    print(f"Skipping {m} track for {wad_name} because we can only handle MIDI files for now")
+                continue
+            filename = ''.join(x for x in from_music_name_to_map_name[m] if x.isalnum() or x == '_') if m in from_music_name_to_map_name else f"_{m}"
+            midi_filepath = Path(extraction_path, f"{filename_prefix}{filename}.mid")
+            if not midi_filepath.exists() or force:
+                inwad.music[m].to_file(str(midi_filepath))
+                n += 1
+
         print(f"Exported {n} music tracks")
 
-    if len(args) == 1:
-        sys.exit()
-    exported_extension = f".{args[1]}"
-    if verbose:
-        print(f"Rendering midis to {extraction_path}...")
-    for f in extraction_path.glob(f"{filename_prefix}*.mid"):
-        exported_filename = f.name.replace(".mid", exported_extension)
-        exported_filepath = extraction_path.joinpath(exported_filename)
-        if not exported_filepath.exists() or force:
-            subprocess.run(["fluidsynth", f"-T{args[1]}", "-F", exported_filepath, f])
+        if len(args) == 1:
+            continue
+        exported_extension = f".{args[1]}"
+        if verbose:
+            print(f"Rendering midis to {extraction_path}...")
+        for f in extraction_path.glob(f"{filename_prefix}*.mid"):
+            exported_filename = f.name.replace(".mid", exported_extension)
+            exported_filepath = extraction_path.joinpath(exported_filename)
+            if not exported_filepath.exists() or force:
+                subprocess.run(["fluidsynth", f"-T{args[1]}", "-F", exported_filepath, f])
