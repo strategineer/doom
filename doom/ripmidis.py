@@ -60,7 +60,7 @@ if len(sys.argv) < 1:
 else:
     # process optional flags
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "vdaf")
+        opts, args = getopt.getopt(sys.argv[1:], "vaf")
         for o, a in opts:
             if o == "-v":
                 verbose = True
@@ -137,10 +137,15 @@ else:
                 # skip weird tracks unless -a arg is passed
                 continue
             data = inwad.music[m].data
-            print(f"{m}P {inwad.music[m].data[:10]}")
             file_extension = ".mid" 
             if data.startswith(b'Ogg'):
                 file_extension = ".ogg"
+            elif data.startswith(b'fLaC'):
+                file_extension = ".flac"
+            elif data.startswith(b'ID3') or data.startswith(b'\xff\xfbql'):
+                file_extension = ".mp3"
+            elif data.startswith(b'RIFF$8\xb9\x01WAVE'):
+                file_extension = ".wav"
             elif not data.startswith(b'MThd'):
                 # note to self: DOOM-specific MUS files start with b'MUS'
                 # TODO figure out if we could convert MUS files to MIDI files, that would be sick, to allow for playing them outside of a doom source port
@@ -150,6 +155,7 @@ else:
             filename = ''.join(x for x in from_music_name_to_map_name[m] if x.isalnum() or x == '_') if m in from_music_name_to_map_name else f"_{m}"
             filepath = Path(extraction_path, f"{filename_prefix}{filename}{file_extension}")
             if not filepath.exists() or force:
+                print(f"Writing to {filepath}")
                 inwad.music[m].to_file(str(filepath))
                 n += 1
 
