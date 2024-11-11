@@ -137,6 +137,10 @@ else:
                 # skip weird tracks unless -a arg is passed
                 continue
             data = inwad.music[m].data
+            
+            if data.startswith(b'MUS'):
+                print(f"MUS music files found in {wad_name}, convert them to midi with Slade3 first then try again...")
+                continue
             file_extension = ".mid" 
             if data.startswith(b'Ogg'):
                 file_extension = ".ogg"
