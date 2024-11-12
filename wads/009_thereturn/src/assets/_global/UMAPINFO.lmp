@@ -1,0 +1,6 @@
+MAP MAP01
+{
+   levelname = "The Return"
+   author = "strategineer"
+   skytexture =  "sky1"
+}

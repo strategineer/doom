@@ -5,7 +5,7 @@ Advanced engine needed  : Source Port that This is Targeting
 Primary purpose         : Single play / Co-op / Deathmatch / Other
 ===========================================================================
 Title                   : Title of this Mod
-Filename                : ouroboros.WAD
+Filename                : anox.WAD
 Release date            : Mnth. Day, Year
 Author                  : strategineer
 Email Address           : me@strategineer.com (must match uploader)

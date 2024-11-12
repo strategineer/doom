@@ -9,3 +9,4 @@ wads/*/src/wads/textures
 dist/
 build/
 exports/
+*.autosave*
