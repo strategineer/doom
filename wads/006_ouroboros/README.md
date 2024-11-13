@@ -6,6 +6,8 @@ Detailing: 3h+
 ## Screenshots
 ![](img/layout.jpg)
 
+
+![](img/MAP01.gif)
 ![](img/MAP01.png)
 
 ![](img/MAP01_01.png)

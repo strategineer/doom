@@ -25,9 +25,15 @@ else:
     # load WAD and draw map(s)
 
     # todo do work
-    maps = [str(x) for x in Path(".").glob("/wads/*/src/maps/*")]
+    maps = [x for x in Path(".").glob("wads/*/src/maps/*.wad")]
 
     # run drawimages + dmvis and move the images where they need to be
     for m in maps:
-        subprocess.run(["poetry", "run", "python", "doom/drawmaps2.py", m, m.slug, "5000" ]) 
-        subprocess.run(["poetry", "run", "python", "doom/dmvis.py", m, m.slug ])
+        cwd = m.parents[3].absolute()
+        print(f"cwd: {cwd}, m: {m.absolute()}, m.stem: {m.stem}")
+        subprocess.run(["poetry", "run", "python", "../doom/drawmaps2.py", m.absolute(), m.stem, "5000" ], cwd=cwd) 
+        subprocess.run(["poetry", "run", "python", "../doom/dmvis.py", m.absolute(), m.stem ], cwd=cwd)
+        for png in cwd.glob("*.png"):
+            png.replace(m.parents[2].joinpath(f"{m.stem}.png"))
+        for gif in m.parents[0].glob("*.gif"):
+            gif.replace(m.parents[2].joinpath(f"{m.stem}.gif"))

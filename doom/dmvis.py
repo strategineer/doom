@@ -334,7 +334,6 @@ if __name__ == "__main__":
 	
 	try:
 		wad.from_file(filename)
-		print(wad)
 		
 	except AssertionError:
 		stderr.write("Error: Unable to load WAD file.\n")

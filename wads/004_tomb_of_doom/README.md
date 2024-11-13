@@ -6,6 +6,8 @@ Mapping time: ?
 
 ![](img/layout.png)
 
+
+![](img/MAP01.gif)
 ![](img/MAP01.png)
 ![](img/MAP01_1.png)
 ![](img/MAP01_2.png)

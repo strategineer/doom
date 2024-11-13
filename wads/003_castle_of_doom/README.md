@@ -6,6 +6,7 @@ Mapping time: 7h.
 
 ## Screenshots
 
+![](img/MAP01.gif)
 
 ![](img/MAP01.png)
 
