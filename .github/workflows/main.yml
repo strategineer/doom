@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master # Set a branch to deploy
+    permissions:
+      contents: write
     paths-ignore:
       - "docs/**"
       - "doom/**"
@@ -38,5 +40,11 @@ jobs:
           key: venv-${{ hashFiles('poetry.lock') }}
       - name: Install the project dependencies
         run: poetry install
-      - name: Regenerate images
+      - name: Regenerate map images
         run: poetry run python doom/regenimages.py
+      - name: Push map images
+        run: |
+          git config --global user.name 'Github Actions'
+          git config --global user.email 'me@strategineer.com'
+          git commit -am "New Map Images"
+          git push
