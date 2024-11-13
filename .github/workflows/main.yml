@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: Generate Map Images
 
 on:
   push:
