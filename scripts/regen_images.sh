@@ -1,3 +1,6 @@
+# todo: generate this dmvis gifs too, poetry run python doom/dmvis.py wads/009_thereturn/src/maps/MAP01.wad MAP01
+# todo: convert this to a batch file?
+# todo: use poetry and convert this code into a python script
 cd /mnt/c/dev/doom
 cd wads/003_castle_of_doom/img
 ../../../scripts/drawmaps2.py ../castle_of_doom.wad MAP01 5000

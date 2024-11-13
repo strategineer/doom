@@ -10,3 +10,4 @@ dist/
 build/
 exports/
 *.autosave*
+/doom/__pycache__
