@@ -34,6 +34,6 @@ else:
         subprocess.run(["poetry", "run", "python", "../doom/drawmaps2.py", m.absolute(), m.stem, "5000" ], cwd=cwd) 
         subprocess.run(["poetry", "run", "python", "../doom/dmvis.py", m.absolute(), m.stem ], cwd=cwd)
         for png in cwd.glob("*.png"):
-            png.replace(m.parents[2].joinpath(f"{m.stem}.png"))
+            png.replace(m.parents[2].joinpath(f"img/{m.stem}.png"))
         for gif in m.parents[0].glob("*.gif"):
-            gif.replace(m.parents[2].joinpath(f"{m.stem}.gif"))
+            gif.replace(m.parents[2].joinpath(f"img/{m.stem}.gif"))
