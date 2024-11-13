@@ -4,17 +4,9 @@ on:
   push:
     branches:
       - main # Set a branch to deploy
-    paths-ignore:
-      - "docs/**"
-      - "doom/**"
-      - "exports/**"
-      - "playtest_wads/**"
-      - "prefabs/**"
-      - "submitted_wads/**"
-      - "tests/**"
-      - "README.md"
-      - "poetry.lock"
-      - "pyproject.toml"
+    paths:
+      - "wads/*/src/maps/*.wad"
+      - ".github/workflows/main.yml"
 
 permissions:
   contents: write
