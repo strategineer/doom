@@ -1,5 +1,7 @@
 This was my entry to the [PUSS XXVI: Clandestine Castle Crashing 2](https://www.doomworld.com/forum/topic/134337-puss-xxvi-clandestine-castle-crashing-2-march-april-speedmapping-event/) speedmapping event.
 
+Targetting complevel 9
+
 Mapping time: 7h.
 
 ## Screenshots

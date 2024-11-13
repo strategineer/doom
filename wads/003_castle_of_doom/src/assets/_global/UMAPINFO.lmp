@@ -1,0 +1,6 @@
+MAP MAP01
+{
+   levelname = "Castle of Doom"
+   author = "strategineer"
+   skytexture =  "sky1"
+}
