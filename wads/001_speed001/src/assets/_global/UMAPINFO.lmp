@@ -1,0 +1,6 @@
+MAP MAP01
+{
+   levelname = "Strat's Speed 001"
+   author = "strategineer"
+   skytexture =  "sky1"
+}
