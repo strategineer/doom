@@ -22,13 +22,20 @@ else:
         print(str(err))
         sys.exit(2)
 
-    # load WAD and draw map(s)
 
-    # todo do work
     maps = [x for x in Path(".").glob("wads/*/src/maps/*.wad")]
 
+    branch = "HEAD~1"
+    if len(args) > 0:
+        branch = args[0]
+
+    output = subprocess.run(["git", "diff", "--name-only", "HEAD", branch], capture_output=True)
+    changed_files = [Path(p) for p in output.stdout.decode('ascii').strip().split('\n')]
     # run drawimages + dmvis and move the images where they need to be
     for m in maps:
+        if m not in changed_files:
+            print(f"Map {m} not changed so skipping image generation for it")
+            continue
         cwd = m.parents[3].absolute()
         print(f"cwd: {cwd}, m: {m.absolute()}, m.stem: {m.stem}")
         subprocess.run(["poetry", "run", "python", "../doom/drawmaps2.py", m.absolute(), m.stem, "5000" ], cwd=cwd) 
