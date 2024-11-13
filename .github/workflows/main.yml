@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main # Set a branch to deploy
-    permissions:
-      contents: write
     paths-ignore:
       - "docs/**"
       - "doom/**"
@@ -17,6 +15,9 @@ on:
       - "README.md"
       - "poetry.lock"
       - "pyproject.toml"
+
+permissions:
+  contents: write
 
 jobs:
   ci:
