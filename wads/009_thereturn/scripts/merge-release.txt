@@ -16,6 +16,7 @@ mergefile  out $0/$4
 mergewad   out $0/$5
 mergewad   out $0/$6
 mergewad   out $0/$7
+mergewad   out $1/wads/Rosy256.wad
 
 finish out $0/$2
 end
