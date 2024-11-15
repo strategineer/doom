@@ -1,6 +1,6 @@
 MAP MAP01
 {
-   levelname = "Strat's Speed 001"
+   levelname = "Tomb Of Doom"
    author = "strategineer"
    skytexture =  "sky1"
 }
