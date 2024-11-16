@@ -1,0 +1,6 @@
+MAP MAP01
+{
+   levelname = "Map 123XYZ"
+   author = "strategineer"
+   skytexture =  "sky1"
+}

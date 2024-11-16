@@ -11,3 +11,5 @@ build/
 exports/
 *.autosave*
 /doom/__pycache__
+/music/test
+templates/mbf21/src/wads/textures/OTEX_1.1.WAD
